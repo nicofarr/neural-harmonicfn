@@ -4,7 +4,7 @@ import pandas as pd
 import os
 import numpy as np 
 from matplotlib import pyplot as plt
-from utils import fetch_X_y,compute_matrix_contrast_betas,tr,fetch_ica_ts,fetch_imgs_confounds
+from utils import compute_matrix_contrast_betas,tr,fetch_ica_ts,fetch_imgs_confounds
 import sys
 
 cursubj = np.str(sys.argv[1])

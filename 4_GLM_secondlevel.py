@@ -7,9 +7,7 @@ import pandas as pd
 import os
 import numpy as np 
 from matplotlib import pyplot as plt
-from utils import fetch_imgs_motions,fetch_X_y,compute_matrix_contrast_betas,tr,fetch_ica_ts
 import sys
-from nilearn.image import mean_img,threshold_img
 import datetime
 
 basedir = '/media/nfarrugi/datapal/imagery-mvpa/results'
