@@ -1,5 +1,5 @@
 # neural-harmonicfn
-Repository for paper "Neural representations of harmonic function in musical imagery and perception"
+Repository for paper ["Neural representations of harmonic function in musical imagery and perception"](https://osf.io/qu5vy/)
 
 # Script organisation 
 
