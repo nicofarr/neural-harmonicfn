@@ -13,7 +13,7 @@ firstlevelpath = os.path.join(basedir,'univariate')
 
 now = datetime.datetime.now()
 
-Df = pd.read_pickle('/home/nfarrugi/Documents/data/tudor/behav/BAIS_GMSI.pkl')
+Df = pd.read_pickle('BAIS_GMSI.pkl')
 
 secondlevelpath = os.path.join('/media/nfarrugi/datapal/results','RESULTS_GLM_covar_{}'.format(now.strftime("%Y-%m-%d_%H-%M")))
 
@@ -84,19 +84,13 @@ def calc_view(listmaps,label,regressor,thr,Df=Df,twosided=True,clust=20):
 
     return z_map,thresholded_map1,threshold1
 
-regressor = 'BAIS-Vivid'
-thr=0.001
-calc_view(P_TvsD,"C_CvsF",regressor=regressor,clust=10,thr=thr)
-calc_view(P_TvsD,"P_TvsD",regressor=regressor,clust=10,thr=thr)
-calc_view(P_CvsF,"P_CvsF",regressor=regressor,clust=10,thr=thr)
-calc_view(I_TvsD,"I_TvsD",regressor=regressor,clust=10,thr=thr)
-calc_view(I_CvsF,"I_CvsF",regressor=regressor,clust=10,thr=thr)
-calc_view(PsupI,"PsupI",regressor=regressor,twosided=True,clust=100,thr=thr)
-#calc_view(IsupP,"IsupP",regressor=regressor,twosided=False,clust=100)
-#calc_view(control,"Control",regressor=regressor,clust=100)
-#calc_view(play,"Play",regressor=regressor,clust=100)
+for regressor in ['BAIS-Vivid','BAIS-Control','MT_mean']:
+    thr=0.001
+    calc_view(P_TvsD,"C_CvsF",regressor=regressor,clust=10,thr=thr)
+    calc_view(P_TvsD,"P_TvsD",regressor=regressor,clust=10,thr=thr)
+    calc_view(P_CvsF,"P_CvsF",regressor=regressor,clust=10,thr=thr)
+    calc_view(I_TvsD,"I_TvsD",regressor=regressor,clust=10,thr=thr)
+    calc_view(I_CvsF,"I_CvsF",regressor=regressor,clust=10,thr=thr)
+    calc_view(PsupI,"PsupI",regressor=regressor,twosided=True,clust=100,thr=thr)
+    #calc_view(IsupP,"IsupP",regressor=regressor,twosided=False,clust=100)
 
-### BAIS CONTROL - RIEN 
-### BAIS Vivid - RIEN 
-### GMSI GM - RIEN 
-### GMSI MT - RIEN

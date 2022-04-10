@@ -46,7 +46,11 @@ surf_rdm = pyrsa.rdm.get_categorical_rdm(category_vector=surfacevector,category_
 modality_rdm = pyrsa.rdm.get_categorical_rdm(category_vector=conditionvector,category_name='Condition')
 stim_rdm = pyrsa.rdm.get_categorical_rdm(category_vector=stimvector,category_name='stimulus')
 tonality_rdm = pyrsa.rdm.get_categorical_rdm(category_vector=tonalityvector,category_name='Key')
-if False:
+
+
+### Plotting of Theoretical RDM 
+
+if True:
     pyrsa.vis.show_rdm(harm_rdm,filename=os.path.join(resultspath,'rdm_harmony.svg'),pattern_descriptor='harmony')
     pyrsa.vis.show_rdm(modality_rdm,filename=os.path.join(resultspath,'rdm_condition.svg'),pattern_descriptor='Condition')
     pyrsa.vis.show_rdm(tonality_rdm,filename=os.path.join(resultspath,'rdm_tonality.svg'),pattern_descriptor='Key')
@@ -64,7 +68,7 @@ for name,rdm_m in zip(['Surface','Harmony','Key','Stimuli'],[surf_rdm,harm_rdm,t
 
 
 ### plotting of a few neural RDM 
-if False:
+if True:
     ### Neural RDM 
     for roi in roilist:
         all_neural_rdms = []
@@ -102,6 +106,7 @@ for roi in roilist:
     #results = pyrsa.inference.eval_fixed(models, all_neural_rdms, method=metric)
     #pyrsa.vis.plot_model_comparison(results,savepath=os.path.join(resultspath,f"{roi[:-4]}_fixed.png"),test_pair_comparisons='nili',test_above_0='icicles',test_below_noise_ceil='icicles')
 
+    ### Bootstrapping using patterns
     results = pyrsa.inference.eval_bootstrap_pattern(models, all_neural_rdms, method=metric,N=nperm)
     evaluations,perf,errorbar_low,errorbar_high = pyrsa.vis.plot_model_comparison(results,savepath=os.path.join(resultspath,f"{roi[:-4]}_bootstrap_pattern.svg"),test_pair_comparisons='nili',test_above_0='icicles',test_below_noise_ceil='icicles',error_bars='sem')
     
@@ -112,6 +117,7 @@ for roi in roilist:
         Df = pd.DataFrame(A,index = ['correlation','err_low','err_high','noise_lower','noise_upper'],columns=['condition','chord','harmony','key'])
         Df.to_csv(os.path.join(resultspath,f"{roi[:-4]}_bootstrap_pattern.csv"))
 
+    ### Bootstrapping usng subjects
     results = pyrsa.inference.eval_bootstrap_rdm(models, all_neural_rdms, method=metric,N=nperm)
     evaluations,perf,errorbar_low,errorbar_high = pyrsa.vis.plot_model_comparison(results,savepath=os.path.join(resultspath,f"{roi[:-4]}_bootstrap_rdm.svg"),test_pair_comparisons='nili',test_above_0='icicles',test_below_noise_ceil='icicles',error_bars='sem')
 

@@ -19,7 +19,6 @@ from sklearn.preprocessing import LabelEncoder
 from sklearn.feature_selection import RFE
 now = datetime.datetime.now()
 
-### For now RSA is only done with ModelM
 betapath =  os.path.join('/media/nfarrugi/datapal/imagery-mvpa','results','glm_M')
 
 #secondlevelpath = os.path.join('/media/nfarrugi/datapal/results','RESULTS_GLM_{}'.format(now.strftime("%Y-%m-%d_%H-%M")))
@@ -111,7 +110,7 @@ runvec_control = np.tile(np.tile([1,1,2,2,3,3,4,4],2),(35))
 runvec_PvI = np.tile(runvec,(2))
 screening = 100
 smoothing = 5 
-estimator = 'logistic' ### Initial results from early april 21 where with logistic
+estimator = 'logistic'
 notdummy = False
 logo = LeaveOneGroupOut()
 

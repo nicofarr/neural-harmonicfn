@@ -254,7 +254,7 @@ def compute_matrix_contrast_betas(paradigm_allruns,imgs,masks,confounds,frame_ti
 
                 z_map.to_filename(filepath)
             
-        print("Saving n regressors...")
+        print("Saving number of regressors for DoF calculation...")
         np.savez_compressed(os.path.join(betapath,"n_reg.npz"),nreg = n_reg)
 
 
@@ -279,9 +279,7 @@ def compute_matrix_contrast_betas(paradigm_allruns,imgs,masks,confounds,frame_ti
         
         contrasts_dict = {
             "P_TvsD": "P_T_C + P_T_F - P_D_C - P_D_F",
-            "C_CvsF": "C_Z_C - C_Z_F",
-            "Control" : "0.5*C_Z_C + 0.5*C_Z_F",
-            "Play" : "play",
+            "C_CvsF": "C_Z_C - C_Z_F",            
             "P_CvsF": "P_T_C + P_D_C - P_T_F - P_D_F",
             "I_TvsD": "I_T_C + I_T_F - I_D_C - I_D_F",
             "I_CvsF": "I_T_C + I_D_C - I_T_F - I_D_F",

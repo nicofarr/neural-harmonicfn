@@ -104,21 +104,15 @@ def calc_view(listmaps,label,twosided=True,clust=20,savepath=secondlevelpath,col
     return z_map,thresholded_map3,threshold3
 
 if True:
-    #calc_view(P_TvsD,"C_CvsF",clust=10)
-    #calc_view(P_TvsD,"P_TvsD",clust=10)
-    zP_IcvsF,tmapPcvsF,tPcvsF =calc_view(P_CvsF,"P_CvsF",clust=10,color='g')### FPR 3.28, FDR 4.93 , FWER is 4.94
-    zI_ITvsD,tmapITvsD,tITvsD  = calc_view(I_TvsD,"I_TvsD",clust=10,color='r') ### FDR is inf ??? , FWER is 4.94
-    zI_IcvsF,tmapIcvsF,tIcvsF = calc_view(I_CvsF,"I_CvsF",clust=10,color='b') ### FDR is 4.22, FWER is 4.94
-    zPsupI,tmapPsupI,tPsupI = calc_view(PsupI,"PsupI",twosided=True,clust=10)### FDR is 3.38 , FWER is 4.94
-    """ 
-    f,ax = plt.subplots(nrows=2,ncols=2,figsize=(20,20))
-    plot_stat_map(stat_map_img=tmapITvsD,threshold=tITvsD,figure=f,axes=ax[0,0],title= "Imagery - T > D")
-    plot_stat_map(stat_map_img=tmapIcvsF,threshold=tIcvsF,figure=f,axes=ax[0,1],title= "Imagery - C > F#")
-    plot_stat_map(stat_map_img=tmapPcvsF,threshold=tPcvsF,figure=f,axes=ax[1,0],title= "Perception - C > F#")
-    plot_stat_map(stat_map_img=tmapPsupI,threshold=tPsupI,figure=f,axes=ax[1,1],title= "Perception > Imagery")
-    plt.tight_layout()
-    f.savefig(os.path.join(secondlevelpath,f"clusters.png"))
-    """
+    
+    zP_CcvsF,tmapCcvsF,tCcvsF =calc_view(control,"control",clust=10,color='g',twosided=True) 
+    
+    zP_PTvsD,tmapPTvsD,tPTvsD  = calc_view(I_TvsD,"P_TvsD",clust=10,color='r') 
+    zI_ITvsD,tmapITvsD,tITvsD  = calc_view(I_TvsD,"I_TvsD",clust=10,color='r') 
+    zP_PcvsF,tmapPcvsF,tPcvsF =calc_view(P_CvsF,"P_CvsF",clust=10,color='g')
+    zI_IcvsF,tmapIcvsF,tIcvsF = calc_view(I_CvsF,"I_CvsF",clust=10,color='b') 
+    zPsupI,tmapPsupI,tPsupI = calc_view(PsupI,"PsupI",twosided=True,clust=10)
+    
     f,ax = plt.subplots(nrows=2,ncols=2,figsize=(10,10))
     plot_glass_brain(stat_map_img=tmapITvsD,threshold=tITvsD,figure=f,axes=ax[0,0],title= "Imagery - T > D")
     plot_glass_brain(stat_map_img=tmapIcvsF,threshold=tIcvsF,figure=f,axes=ax[0,1],title= "Imagery - C > F#")
@@ -127,8 +121,7 @@ if True:
     f.savefig(os.path.join(secondlevelpath,f"clusters_glass.svg"))
 
     f,ax = plt.subplots(nrows=2,ncols=1,figsize=(10,10))
-    #plot_glass_brain(stat_map_img=tmapITvsD,threshold=tITvsD,figure=f,axes=ax[0],title= "Imagery - T > D")
-
+    
     display = plot_glass_brain(None,figure=f,axes=ax[1],title= "B")
     display.add_contours(tmapITvsD, levels=[tITvsD], filled=True,colors='r')
     display.add_contours(tmapIcvsF, levels=[tIcvsF], filled=True,colors='b')
@@ -139,8 +132,8 @@ if True:
 
 
 
-zP_CcvsF,tmapCcvsF,tCcvsF =calc_view(control,"control",clust=10,color='g',twosided=True) ## FDR is inf 
 
-#calc_view(IsupP,"IsupP",twosided=False,clust=100)
+
+
 #calc_view(control,"Control",clust=100)
 #calc_view(play,"Play",clust=100)

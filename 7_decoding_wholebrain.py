@@ -21,10 +21,9 @@ now = datetime.datetime.now()
 
 cursubj = np.str(sys.argv[1])
 
-### For now RSA is only done with ModelM
 betapath =  os.path.join('/media/nfarrugi/datapal/imagery-mvpa','results','glm_M',cursubj)
 
-decodingpath = os.path.join('/media/nfarrugi/datapal/','results','decoding_wholebrain_frem_dummy','{}'.format(cursubj))
+decodingpath = os.path.join('/media/nfarrugi/datapal/','results','decoding_wholebrain_frem','{}'.format(cursubj))
 
 rerun = False 
 
@@ -107,7 +106,7 @@ runvec_PvI = np.tile(runvec,(2))
 
 screening = 20
 smoothing = 5
-estimator = 'dummy_classifier' ### Initial results from early april 21 where with logistic
+estimator = 'logistic_l1' 
 
 logo = LeaveOneGroupOut()
 
@@ -222,7 +221,7 @@ docontrol = True
 dotonality = True
 
 #roilist = os.listdir('visrois')
-roilist = ['fullbrain.nii.gz', ]
+roilist = ['WholeBrainAnalysis', ]
 
 print(roilist)
 

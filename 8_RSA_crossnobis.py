@@ -13,9 +13,7 @@ now = datetime.datetime.now()
 
 cursubj = np.str(sys.argv[1])
 
-### For now RSA is only done with ModelM
 betapath =  os.path.join('/media/nfarrugi/datapal/','results','glm_M',cursubj)
-MNIdatacleanpath = os.path.join('/media/nfarrugi/datapal/beluga/fmriprep/',f"sub-{cursubj}")
 
 rsapath = os.path.join('/media/nfarrugi/datapal/','results','rsa_crossnobis',cursubj)
 
@@ -94,27 +92,25 @@ for curroi in roilist:
     masker = NiftiMasker(mask_img=os.path.join('rois',curroi))
     masker.fit()
 
-    ## Mask the data
+    ## Mask the data (extract only ROI voxels)
     print("Masking betas")
     data = np.vstack([masker.transform(curimg) for curimg in listimg])
 
-    ## mask the residuals 
+    ## mask the residuals (extract only ROI voxels)
     print("Masking Residuals")
     res_masked = ([masker.transform(residuals[i]) for i in range(4)])
     
     ## Calculate the precision matrix
-    dof=res_masked[0].shape[0] - np.load(os.path.join(betapath,"n_reg.npz"))['nreg'] ### TO DO : fetch the number of regressors for each run and input it here
+    dof=res_masked[0].shape[0] - np.load(os.path.join(betapath,"n_reg.npz"))['nreg'] ## number of degrees of freedom of the regressors
     precisions = pyrsa.data.noise.prec_from_residuals(res_masked,dof=dof)
     
     ## Prepare the structure for pyrsa
 
     RsaDataset = pyrsa.data.Dataset(data,obs_descriptors={'run':runvector,'trials':trialsvector})
 
-    ## Calculate the Neural RDM using Cross Validated Mahalanobis Distance
+    ## Calculate the Neural RDM using Cross Validated Mahalanobis Distance, using Run as cross validation
     obs_descriptor = 'trials'
     neural_rdm =  pyrsa.rdm.calc_rdm_crossnobis(RsaDataset,obs_descriptor,noise=precisions,cv_descriptor='run')
-    #pyrsa.vis.show_rdm(neural_rdm,pattern_descriptor=obs_descriptor,rdm_descriptor=f"rdm_{obs_descriptor}_{roititle}",show_colorbar=True,filename=os.path.join(rsapath,f"rdm_{obs_descriptor}_{roititle}.png"))
-    #plt.close()
 
     ## Save the matrix
     np.savez_compressed(os.path.join(rsapath,f"{roititle}_rsa.npz"),rdm=neural_rdm.get_matrices())
